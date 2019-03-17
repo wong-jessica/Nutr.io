@@ -58,9 +58,7 @@ public class LoginActivity extends AppCompatActivity{
         mLeadToSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                setContentView(R.layout.activity_login);
-                updateUI(currentUser,false);
-
+                signIn();
             }
         });
 
@@ -114,6 +112,39 @@ public class LoginActivity extends AppCompatActivity{
                 });
     }
 
+    public void signIn(){
+        setContentView(R.layout.activity_login);
+        mEmailView = (EditText) findViewById(R.id.email_login);
+        mPasswordView = (EditText) findViewById(R.id.password_login);
+        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+
+        mEmailSignInButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mAuth.signInWithEmailAndPassword(mEmailView.getText().toString(), mPasswordView.getText().toString())
+                        .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    // Sign in success, update UI with the signed-in user's information
+                                    Log.d("Success", "signInWithEmail:success");
+                                    FirebaseUser user = mAuth.getCurrentUser();
+                                    updateUI(user,false);
+                                } else {
+                                    // If sign in fails, display a message to the user.
+                                    Log.w("Failure ", "signInWithEmail:failure", task.getException());
+                                    Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                            Toast.LENGTH_SHORT).show();
+                                    updateUI(null,false);
+                                }
+
+
+                            }
+                        });
+            }
+        });
+    }
+
     private void updateUI(final FirebaseUser currentUser, boolean firstTimeUser) {
         if(currentUser == null){
             if(firstTimeUser){
@@ -126,36 +157,7 @@ public class LoginActivity extends AppCompatActivity{
                 });
             }
             else{
-                setContentView(R.layout.activity_login);
-                mEmailView = (EditText) findViewById(R.id.email_login);
-                mPasswordView = (EditText) findViewById(R.id.password_login);
-                Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
-
-                mEmailSignInButton.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        mAuth.signInWithEmailAndPassword(mEmailView.getText().toString(), mPasswordView.getText().toString())
-                                .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<AuthResult> task) {
-                                        if (task.isSuccessful()) {
-                                            // Sign in success, update UI with the signed-in user's information
-                                            Log.d("Success", "signInWithEmail:success");
-                                            FirebaseUser user = mAuth.getCurrentUser();
-                                            updateUI(user,false);
-                                        } else {
-                                            // If sign in fails, display a message to the user.
-                                            Log.w("Failure ", "signInWithEmail:failure", task.getException());
-                                            Toast.makeText(LoginActivity.this, "Authentication failed.",
-                                                    Toast.LENGTH_SHORT).show();
-                                            updateUI(null,false);
-                                        }
-
-
-                                    }
-                                });
-                    }
-                });
+                signIn();
             }
         }
         else{
