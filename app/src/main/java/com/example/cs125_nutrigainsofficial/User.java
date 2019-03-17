@@ -10,6 +10,7 @@ public class User {
     private String age;
     private String gender;
     private ArrayList<String> likes = new ArrayList<>();
+    private ArrayList<String> dislikes = new ArrayList<>();
     private ArrayList<String> dietChoice = new ArrayList<>();
     private ArrayList<String> allergies = new ArrayList<>();
     private ArrayList<String> religious = new ArrayList<>();
@@ -57,6 +58,10 @@ public class User {
 
     public void setIngredients(ArrayList<String> ingredients) {
         this.ingredients = ingredients;
+    }
+
+    public void addIngredients(String i){
+        this.ingredients.add(i);
     }
 
     public ArrayList<Integer> getSugar() {
@@ -115,12 +120,20 @@ public class User {
         this.religious = religious;
     }
 
+    public void addReligious(String r){
+        this.religious.add(r);
+    }
+
     public ArrayList<String> getAllergies() {
         return allergies;
     }
 
     public void setAllergies(ArrayList<String> allergies) {
         this.allergies = allergies;
+    }
+
+    public void addAllergies(String i){
+        this.allergies.add(i);
     }
 
     public ArrayList<String> getDietChoice() {
@@ -131,12 +144,20 @@ public class User {
         this.dietChoice = dietChoice;
     }
 
+    public void addDietChoice(String d){
+        this.dietChoice.add(d);
+    }
+
     public ArrayList<String> getLikes() {
         return likes;
     }
 
     public void setLikes(ArrayList<String> likes) {
         this.likes = likes;
+    }
+
+    public void addLikes(String l){
+        this.likes.add(l);
     }
 
     public String getUsername() {
@@ -157,6 +178,18 @@ public class User {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public ArrayList<String> getDislikes(){
+        return dislikes;
+    }
+
+    public void setDislikes(ArrayList<String> d){
+        this.dislikes = d;
+    }
+
+    public void addDislikes(String d){
+        this.dislikes.add(d);
     }
 
 

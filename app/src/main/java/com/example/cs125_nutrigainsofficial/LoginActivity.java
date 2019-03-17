@@ -92,7 +92,8 @@ public class LoginActivity extends AppCompatActivity{
                             String id = databaseUsers.push().getKey();
                             User u = new User(id,user.getEmail(),mName.getText().toString(),mAge.getText().toString(),mGender.getText().toString());
                             databaseUsers.child(id).setValue(u);
-                            databaseUsers.child(id).child("Likes").child("").setValue(u.getLikes());
+                            databaseUsers.child(id).child("likes").child("").setValue(u.getLikes());
+                            databaseUsers.child(id).child("dislikes").child("").setValue(u.getDislikes());
                             databaseUsers.child(id).child("dietChoice").child("").setValue(u.getDietChoice());
                             databaseUsers.child(id).child("allergies").child("").setValue(u.getAllergies());
                             databaseUsers.child(id).child("religious").child("").setValue(u.getReligious());
@@ -156,7 +157,7 @@ public class LoginActivity extends AppCompatActivity{
                                             updateUI(null,false);
                                         }
 
-                                        // ...
+
                                     }
                                 });
                     }
