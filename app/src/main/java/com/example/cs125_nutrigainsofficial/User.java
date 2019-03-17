@@ -4,8 +4,8 @@ public class User {
     private String userId;
     private String email;
     private String username;
-    private String password;
-    private int age;
+    //private String password;
+    private String age;
     private String gender;
     private String[] likes;
     private String[] dietChoice;
@@ -20,23 +20,22 @@ public class User {
     private String[] ingredients;
     private String[] favorites;
 
-    User(String id, String email, String password, String name, int age, String gender){
+    User(String id, String email, String name, String age, String gender){
         this.userId = id;
         this.email = email;
-        this.password = password;
+        //this.password = password;
         this.username = name;
         this.age = age;
         this.gender = gender;
     }
 
-    public int getAge(){return age;}
+    public String getAge(){return age;}
 
-    public void setAge(int a){this.age = a;}
+    public void setAge(String a){this.age = a;}
 
     public String getGender(){return gender;}
 
     public void setGender(String gen){this.gender = gen;}
-
 
     public String getUserId() {
         return userId;
@@ -136,14 +135,6 @@ public class User {
 
     public void setLikes(String[] likes) {
         this.likes = likes;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getUsername() {
