@@ -1,5 +1,7 @@
 package com.example.cs125_nutrigainsofficial;
 
+import java.util.List;
+
 public class User {
     private String userId;
     private String email;
@@ -7,18 +9,18 @@ public class User {
     //private String password;
     private String age;
     private String gender;
-    private String[] likes;
-    private String[] dietChoice;
-    private String[] allergies;
-    private String[] religious;
+    private List<String> likes;
+    private List<String> dietChoice;
+    private List<String> allergies;
+    private List<String> religious;
     private int fat;
     private int fiber;
     private int sodium;
     private int calories;
     private int carbs;
     private int sugar;
-    private String[] ingredients;
-    private String[] favorites;
+    private List<String> ingredients;
+    private List<String> favorites;
 
     User(String id, String email, String name, String age, String gender){
         this.userId = id;
@@ -41,19 +43,19 @@ public class User {
         return userId;
     }
 
-    public String[] getFavorites() {
+    public List<String> getFavorites() {
         return favorites;
     }
 
-    public void setFavorites(String[] favorites) {
+    public void setFavorites(List<String> favorites) {
         this.favorites = favorites;
     }
 
-    public String[] getIngredients() {
+    public List<String> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(String[] ingredients) {
+    public void setIngredients(List<String> ingredients) {
         this.ingredients = ingredients;
     }
 
@@ -105,35 +107,35 @@ public class User {
         this.fat = fat;
     }
 
-    public String[] getReligious() {
+    public List<String> getReligious() {
         return religious;
     }
 
-    public void setReligious(String[] religious) {
+    public void setReligious(List<String> religious) {
         this.religious = religious;
     }
 
-    public String[] getAllergies() {
+    public List<String> getAllergies() {
         return allergies;
     }
 
-    public void setAllergies(String[] allergies) {
+    public void setAllergies(List<String> allergies) {
         this.allergies = allergies;
     }
 
-    public String[] getDietChoice() {
+    public List<String> getDietChoice() {
         return dietChoice;
     }
 
-    public void setDietChoice(String[] dietChoice) {
+    public void setDietChoice(List<String> dietChoice) {
         this.dietChoice = dietChoice;
     }
 
-    public String[] getLikes() {
+    public List<String> getLikes() {
         return likes;
     }
 
-    public void setLikes(String[] likes) {
+    public void setLikes(List<String> likes) {
         this.likes = likes;
     }
 
