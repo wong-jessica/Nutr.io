@@ -1,26 +1,26 @@
 package com.example.cs125_nutrigainsofficial;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class User {
     private String userId;
     private String email;
     private String username;
-    //private String password;
     private String age;
     private String gender;
-    private List<String> likes;
-    private List<String> dietChoice;
-    private List<String> allergies;
-    private List<String> religious;
-    private int fat;
-    private int fiber;
-    private int sodium;
-    private int calories;
-    private int carbs;
-    private int sugar;
-    private List<String> ingredients;
-    private List<String> favorites;
+    private ArrayList<String> likes = new ArrayList<>();
+    private ArrayList<String> dietChoice = new ArrayList<>();
+    private ArrayList<String> allergies = new ArrayList<>();
+    private ArrayList<String> religious = new ArrayList<>();
+    private ArrayList<Integer> fat = new ArrayList<>();
+    private ArrayList<Integer> fiber = new ArrayList<>();
+    private ArrayList<Integer> sodium = new ArrayList<>();
+    private ArrayList<Integer> calories = new ArrayList<>();
+    private ArrayList<Integer> carbs = new ArrayList<>();
+    private ArrayList<Integer> sugar = new ArrayList<>();
+    private ArrayList<String> ingredients = new ArrayList<>();
+    private ArrayList<String> favorites = new ArrayList<>();
 
     User(String id, String email, String name, String age, String gender){
         this.userId = id;
@@ -43,99 +43,99 @@ public class User {
         return userId;
     }
 
-    public List<String> getFavorites() {
+    public ArrayList<String> getFavorites() {
         return favorites;
     }
 
-    public void setFavorites(List<String> favorites) {
+    public void setFavorites(ArrayList<String> favorites) {
         this.favorites = favorites;
     }
 
-    public List<String> getIngredients() {
+    public ArrayList<String> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(List<String> ingredients) {
+    public void setIngredients(ArrayList<String> ingredients) {
         this.ingredients = ingredients;
     }
 
-    public int getSugar() {
+    public ArrayList<Integer> getSugar() {
         return sugar;
     }
 
-    public void setSugar(int sugar) {
+    public void setSugar(ArrayList<Integer> sugar) {
         this.sugar = sugar;
     }
 
-    public int getCarbs() {
+    public ArrayList<Integer> getCarbs() {
         return carbs;
     }
 
-    public void setCarbs(int carbs) {
+    public void setCarbs(ArrayList<Integer> carbs) {
         this.carbs = carbs;
     }
 
-    public int getCalories() {
+    public ArrayList<Integer> getCalories() {
         return calories;
     }
 
-    public void setCalories(int calories) {
+    public void setCalories(ArrayList<Integer> calories) {
         this.calories = calories;
     }
 
-    public int getSodium() {
+    public ArrayList<Integer> getSodium() {
         return sodium;
     }
 
-    public void setSodium(int sodium) {
+    public void setSodium(ArrayList<Integer> sodium) {
         this.sodium = sodium;
     }
 
-    public int getFiber() {
+    public ArrayList<Integer> getFiber() {
         return fiber;
     }
 
-    public void setFiber(int fiber) {
+    public void setFiber(ArrayList<Integer> fiber) {
         this.fiber = fiber;
     }
 
-    public int getFat() {
+    public ArrayList<Integer> getFat() {
         return fat;
     }
 
-    public void setFat(int fat) {
+    public void setFat(ArrayList<Integer> fat) {
         this.fat = fat;
     }
 
-    public List<String> getReligious() {
+    public ArrayList<String> getReligious() {
         return religious;
     }
 
-    public void setReligious(List<String> religious) {
+    public void setReligious(ArrayList<String> religious) {
         this.religious = religious;
     }
 
-    public List<String> getAllergies() {
+    public ArrayList<String> getAllergies() {
         return allergies;
     }
 
-    public void setAllergies(List<String> allergies) {
+    public void setAllergies(ArrayList<String> allergies) {
         this.allergies = allergies;
     }
 
-    public List<String> getDietChoice() {
+    public ArrayList<String> getDietChoice() {
         return dietChoice;
     }
 
-    public void setDietChoice(List<String> dietChoice) {
+    public void setDietChoice(ArrayList<String> dietChoice) {
         this.dietChoice = dietChoice;
     }
 
-    public List<String> getLikes() {
+    public ArrayList<String> getLikes() {
         return likes;
     }
 
-    public void setLikes(List<String> likes) {
+    public void setLikes(ArrayList<String> likes) {
         this.likes = likes;
     }
 

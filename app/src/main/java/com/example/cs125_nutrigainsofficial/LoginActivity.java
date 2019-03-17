@@ -20,6 +20,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+import java.util.List;
+
 //import android.support.design.widget.Snackbar;
 
 public class LoginActivity extends AppCompatActivity{
@@ -89,7 +92,20 @@ public class LoginActivity extends AppCompatActivity{
                             String id = databaseUsers.push().getKey();
                             User u = new User(id,user.getEmail(),mName.getText().toString(),mAge.getText().toString(),mGender.getText().toString());
                             databaseUsers.child(id).setValue(u);
-                            System.out.println(user.getEmail());
+                            databaseUsers.child(id).child("Likes").child("").setValue(u.getLikes());
+                            databaseUsers.child(id).child("dietChoice").child("").setValue(u.getDietChoice());
+                            databaseUsers.child(id).child("allergies").child("").setValue(u.getAllergies());
+                            databaseUsers.child(id).child("religious").child("").setValue(u.getReligious());
+                            databaseUsers.child(id).child("fat").child("").setValue(u.getFat());
+                            databaseUsers.child(id).child("fiber").child("").setValue(u.getFiber());
+                            databaseUsers.child(id).child("sodium").child("").setValue(u.getSodium());
+                            databaseUsers.child(id).child("calories").child("").setValue(u.getCalories());
+                            databaseUsers.child(id).child("carbs").child("").setValue(u.getCarbs());
+                            databaseUsers.child(id).child("sugar").child("").setValue(u.getSugar());
+                            databaseUsers.child(id).child("ingredients").child("").setValue(u.getIngredients());
+                            databaseUsers.child(id).child("favorites").child("").setValue(u.getFavorites());
+
+
                             updateUI(user,true);
                         } else {
                             // If sign in fails, display a message to the user.
