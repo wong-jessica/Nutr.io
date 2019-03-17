@@ -1,3 +1,5 @@
+package com.example.cs125_nutrigainsofficial;
+
 public class User {
     private String userId;
     private String email;
