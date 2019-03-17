@@ -20,9 +20,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.ArrayList;
-import java.util.List;
-
 //import android.support.design.widget.Snackbar;
 
 public class LoginActivity extends AppCompatActivity{
@@ -33,6 +30,8 @@ public class LoginActivity extends AppCompatActivity{
     private EditText mName;
     private EditText mAge;
     private EditText mGender;
+    private String userID;
+    public static User u;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference databaseUsers = database.getReference("users");
 
@@ -89,22 +88,17 @@ public class LoginActivity extends AppCompatActivity{
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("Success", "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            String id = databaseUsers.push().getKey();
-                            User u = new User(id,user.getEmail(),mName.getText().toString(),mAge.getText().toString(),mGender.getText().toString());
-                            databaseUsers.child(id).setValue(u);
-                            databaseUsers.child(id).child("likes").child("").setValue(u.getLikes());
-                            databaseUsers.child(id).child("dislikes").child("").setValue(u.getDislikes());
-                            databaseUsers.child(id).child("dietChoice").child("").setValue(u.getDietChoice());
-                            databaseUsers.child(id).child("allergies").child("").setValue(u.getAllergies());
-                            databaseUsers.child(id).child("religious").child("").setValue(u.getReligious());
-                            databaseUsers.child(id).child("fat").child("").setValue(u.getFat());
-                            databaseUsers.child(id).child("fiber").child("").setValue(u.getFiber());
-                            databaseUsers.child(id).child("sodium").child("").setValue(u.getSodium());
-                            databaseUsers.child(id).child("calories").child("").setValue(u.getCalories());
-                            databaseUsers.child(id).child("carbs").child("").setValue(u.getCarbs());
-                            databaseUsers.child(id).child("sugar").child("").setValue(u.getSugar());
-                            databaseUsers.child(id).child("ingredients").child("").setValue(u.getIngredients());
-                            databaseUsers.child(id).child("favorites").child("").setValue(u.getFavorites());
+                            userID = databaseUsers.push().getKey();
+                            u = new User(userID,user.getEmail(),mName.getText().toString(),mAge.getText().toString(),mGender.getText().toString());
+                            databaseUsers.child(userID).setValue(u);
+//                            databaseUsers.child(userID).child("fat").child("").setValue(u.getFat());
+//                            databaseUsers.child(userID).child("fiber").child("").setValue(u.getFiber());
+//                            databaseUsers.child(userID).child("sodium").child("").setValue(u.getSodium());
+//                            databaseUsers.child(userID).child("calories").child("").setValue(u.getCalories());
+//                            databaseUsers.child(userID).child("carbs").child("").setValue(u.getCarbs());
+//                            databaseUsers.child(userID).child("sugar").child("").setValue(u.getSugar());
+//                            databaseUsers.child(userID).child("ingredients").child("").setValue(u.getIngredients());
+//                            databaseUsers.child(userID).child("favorites").child("").setValue(u.getFavorites());
 
 
                             updateUI(user,true);
@@ -186,6 +180,7 @@ public class LoginActivity extends AppCompatActivity{
 
     public void goToPreferences(){
         Intent goToIntent = new Intent(this,InputPreferencesActivity.class);
+        goToIntent.putExtra("ID",userID);
         startActivity(goToIntent);
     }
 
