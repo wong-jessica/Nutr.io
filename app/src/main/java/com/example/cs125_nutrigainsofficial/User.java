@@ -1,7 +1,6 @@
 package com.example.cs125_nutrigainsofficial;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class User {
     private String userId;
@@ -26,7 +25,6 @@ public class User {
     User(String id, String email, String name, String age, String gender){
         this.userId = id;
         this.email = email;
-        //this.password = password;
         this.username = name;
         this.age = age;
         this.gender = gender;
