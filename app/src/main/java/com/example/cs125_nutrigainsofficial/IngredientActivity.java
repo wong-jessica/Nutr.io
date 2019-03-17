@@ -1,5 +1,6 @@
 package com.example.cs125_nutrigainsofficial;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -24,7 +25,7 @@ public class IngredientActivity extends AppCompatActivity {
     ArrayAdapter<String> adapter;
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference databaseMessages = database.getReference("message");
+    DatabaseReference databaseUsers = database.getReference("users");
 
 
     @Override
@@ -37,7 +38,9 @@ public class IngredientActivity extends AppCompatActivity {
     @Override
      protected void onStart() {
         super.onStart();
-        setContentView(R.layout.activity_ingredient);
+
+        Intent intent = getIntent();
+        final String userID = intent.getStringExtra("ID");
 
         final EditText newIngredienteditText = findViewById(R.id.newIngredienteditText);
         ListView IngredientListView = findViewById(R.id.IngredietListView);
@@ -48,11 +51,25 @@ public class IngredientActivity extends AppCompatActivity {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ingredientItemsList.add(newIngredienteditText.getText().toString());
-                adapter.notifyDataSetChanged();
-                System.out.println("Here");
+
+                String[] ingredients = newIngredienteditText.getText().toString().split(",");
+                for(String i: ingredients){
+                    LoginActivity.u.addIngredients(i);
+                    ingredientItemsList.add(i);
+                    adapter.notifyDataSetChanged();
+                }
+                databaseUsers.child(userID).child("ingredients").child("").setValue(LoginActivity.u.getIngredients());
+                newIngredienteditText.setText("");
             };
 
+        });
+
+        Button nextButton = findViewById(R.id.nextButton);
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setContentView(R.layout.activity_search);
+            }
         });
 
         }

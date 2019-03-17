@@ -52,6 +52,11 @@ public class InputPreferencesActivity extends AppCompatActivity{
                     @Override
                     public void onClick(View view) {
                         getPreferences();
+                        Intent ingredientIntent = new Intent(InputPreferencesActivity.this, IngredientActivity.class);
+                        Intent intent = getIntent();
+                        String userID = intent.getStringExtra("ID");
+                        ingredientIntent.putExtra("ID",userID);
+                        startActivity(ingredientIntent);
                     }
                 });
             }
@@ -75,7 +80,11 @@ public class InputPreferencesActivity extends AppCompatActivity{
         for(String m: dislikes){
             LoginActivity.u.addDislikes(m);
         }
-        LoginActivity.u.addReligious(mReligious.getText().toString());
+
+        String[] religious = mReligious.getText().toString().split(",");
+        for(String m: religious){
+            LoginActivity.u.addReligious(m);
+        }
 
         databaseUsers.child(userID).child("likes").child("").setValue(LoginActivity.u.getLikes());
         databaseUsers.child(userID).child("dislikes").child("").setValue(LoginActivity.u.getDislikes());
