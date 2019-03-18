@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="59dp"
         android:layout_marginLeft="10dp"
-        android:text="Input Your Info"
+        android:text="Input Your Preferences"
         android:textSize="24sp"
         android:textStyle="bold" />
 
