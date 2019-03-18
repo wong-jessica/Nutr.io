@@ -113,18 +113,18 @@ public class InputPreferencesActivity extends AppCompatActivity{
             LoginActivity.u.addReligious(m);
         }
 
-        LoginActivity.u.addFat(Integer.parseInt(mMinFat.getText().toString()));
-        LoginActivity.u.addFat(Integer.parseInt(mMaxFat.getText().toString()));
-        LoginActivity.u.addCarbs(Integer.parseInt(mMinCarbs.getText().toString()));
-        LoginActivity.u.addCarbs(Integer.parseInt(mMaxCarbs.getText().toString()));
-        LoginActivity.u.addSugar(Integer.parseInt(mMinSugar.getText().toString()));
-        LoginActivity.u.addSugar(Integer.parseInt(mMaxSugar.getText().toString()));
-        LoginActivity.u.addSodium(Integer.parseInt(mMinSodium.getText().toString()));
-        LoginActivity.u.addSodium(Integer.parseInt(mMaxSodium.getText().toString()));
-        LoginActivity.u.addCalories(Integer.parseInt(mMinCalories.getText().toString()));
-        LoginActivity.u.addCalories(Integer.parseInt(mMaxCalories.getText().toString()));
-        LoginActivity.u.addFiber(Integer.parseInt(mMinFiber.getText().toString()));
-        LoginActivity.u.addFiber(Integer.parseInt(mMaxFiber.getText().toString()));
+        LoginActivity.u.addFat(Integer.parseInt(mMinFat.getText().toString().trim()));
+        LoginActivity.u.addFat(Integer.parseInt(mMaxFat.getText().toString().trim()));
+        LoginActivity.u.addCarbs(Integer.parseInt(mMinCarbs.getText().toString().trim()));
+        LoginActivity.u.addCarbs(Integer.parseInt(mMaxCarbs.getText().toString().trim()));
+        LoginActivity.u.addSugar(Integer.parseInt(mMinSugar.getText().toString().trim()));
+        LoginActivity.u.addSugar(Integer.parseInt(mMaxSugar.getText().toString().trim()));
+        LoginActivity.u.addSodium(Integer.parseInt(mMinSodium.getText().toString().trim()));
+        LoginActivity.u.addSodium(Integer.parseInt(mMaxSodium.getText().toString().trim()));
+        LoginActivity.u.addCalories(Integer.parseInt(mMinCalories.getText().toString().trim()));
+        LoginActivity.u.addCalories(Integer.parseInt(mMaxCalories.getText().toString().trim()));
+        LoginActivity.u.addFiber(Integer.parseInt(mMinFiber.getText().toString().trim()));
+        LoginActivity.u.addFiber(Integer.parseInt(mMaxFiber.getText().toString().trim()));
 
         databaseUsers.child(userID).child("fat").child("").setValue(LoginActivity.u.getFat());
         databaseUsers.child(userID).child("fiber").child("").setValue(LoginActivity.u.getFiber());

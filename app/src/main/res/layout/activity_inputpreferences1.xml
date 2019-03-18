@@ -11,7 +11,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="225dp"
         android:layout_marginBottom="100dp"
-        android:text="Do you have a diet choice? (Leave blank if none.  Accepted input is Lacto Vegetarian, Ovo Vegetarian, Pescetarian, Vegan, Vegetarian)"
+        android:text="Do you have a diet choice? (Enter N/A if none.  Accepted input is Lacto Vegetarian, Ovo Vegetarian, Pescetarian, Vegan, Vegetarian)"
         android:textAllCaps="false"
         android:textSize="14sp"
         android:textStyle="bold" />
@@ -33,7 +33,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="69dp"
         android:layout_marginBottom="100dp"
-        android:text="What are your allergies? (Leave blank if none.  Accepted input is Diary, Egg, Gluten, Peanut, Seafood, Sesame, Soy, Sulfite, Tree Nut, Wheat)"
+        android:text="What are your allergies? (Enter N/A if none.  Accepted input is Diary, Egg, Gluten, Peanut, Seafood, Sesame, Soy, Sulfite, Tree Nut, Wheat)"
         android:textAllCaps="false"
         android:textSize="14sp"
         android:textStyle="bold" />

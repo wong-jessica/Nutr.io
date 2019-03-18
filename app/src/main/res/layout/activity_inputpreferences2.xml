@@ -20,7 +20,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="62dp"
         android:layout_marginBottom="100dp"
-        android:text="What are your likes? (Leave blank if none..)"
+        android:text="What are your likes? (Enter N/A if none.)"
         android:textAllCaps="false"
         android:textSize="14sp"
         android:textStyle="bold" />
@@ -57,7 +57,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="183dp"
         android:layout_marginBottom="100dp"
-        android:text="What are your dislikes? (Leave blank if none.)"
+        android:text="What are your dislikes? (Enter N/A if none.)"
         android:textAllCaps="false"
         android:textSize="14sp"
         android:textStyle="bold" />
@@ -70,7 +70,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="306dp"
         android:layout_marginBottom="100dp"
-        android:text="Do you have any religious restrictions? (Leave blank if none.)"
+        android:text="Do you have any religious restrictions? (Enter N/A if none.)"
         android:textAllCaps="false"
         android:textSize="14sp"
         android:textStyle="bold" />
