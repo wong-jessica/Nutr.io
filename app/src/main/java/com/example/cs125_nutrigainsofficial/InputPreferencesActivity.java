@@ -22,6 +22,7 @@ public class InputPreferencesActivity extends AppCompatActivity{
     private EditText mLikes;
     private EditText mDislikes;
     private EditText mReligious;
+    private EditText mMinFat,mMaxFat,mMinFiber,mMaxFiber,mMinSodium,mMaxSodium,mMinCalories,mMaxCalories,mMinCarbs,mMaxCarbs,mMinSugar,mMaxSugar;
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference databaseUsers = database.getReference("users");
@@ -51,12 +52,38 @@ public class InputPreferencesActivity extends AppCompatActivity{
                 mNext2.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        getPreferences();
-                        Intent ingredientIntent = new Intent(InputPreferencesActivity.this, IngredientActivity.class);
-                        Intent intent = getIntent();
-                        String userID = intent.getStringExtra("ID");
-                        ingredientIntent.putExtra("ID",userID);
-                        startActivity(ingredientIntent);
+                        setContentView(R.layout.activity_inputpreferences3);
+                        mMinFat = findViewById(R.id.min_fat);
+                        mMaxFat = findViewById(R.id.max_fat);
+                        mMinFiber = findViewById(R.id.min_fiber);
+                        mMaxFiber = findViewById(R.id.max_fiber);
+                        mMinSodium = findViewById(R.id.min_sodium);
+                        mMaxSodium = findViewById(R.id.max_sodium);
+                        Button mNext3 = (Button) findViewById(R.id.next_button3);
+                        mNext3.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                setContentView(R.layout.activity_inputpreferences4);
+                                mMinCalories = findViewById(R.id.min_calories);
+                                mMaxCalories = findViewById(R.id.max_calories);
+                                mMinCarbs = findViewById(R.id.min_carbs);
+                                mMaxCarbs = findViewById(R.id.max_carbs);
+                                mMinSugar = findViewById(R.id.min_sugar);
+                                mMaxSugar = findViewById(R.id.max_sugar);
+                                Button mNext4 = (Button) findViewById(R.id.next_button4);
+                                mNext4.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        getPreferences();
+                                        Intent ingredientIntent = new Intent(InputPreferencesActivity.this, IngredientActivity.class);
+                                        Intent intent = getIntent();
+                                        String userID = intent.getStringExtra("ID");
+                                        ingredientIntent.putExtra("ID",userID);
+                                        startActivity(ingredientIntent);
+                                    }
+                                });
+                            }
+                        });
                     }
                 });
             }
@@ -86,6 +113,25 @@ public class InputPreferencesActivity extends AppCompatActivity{
             LoginActivity.u.addReligious(m);
         }
 
+        LoginActivity.u.addFat(Integer.parseInt(mMinFat.getText().toString()));
+        LoginActivity.u.addFat(Integer.parseInt(mMaxFat.getText().toString()));
+        LoginActivity.u.addCarbs(Integer.parseInt(mMinCarbs.getText().toString()));
+        LoginActivity.u.addCarbs(Integer.parseInt(mMaxCarbs.getText().toString()));
+        LoginActivity.u.addSugar(Integer.parseInt(mMinSugar.getText().toString()));
+        LoginActivity.u.addSugar(Integer.parseInt(mMaxSugar.getText().toString()));
+        LoginActivity.u.addSodium(Integer.parseInt(mMinSodium.getText().toString()));
+        LoginActivity.u.addSodium(Integer.parseInt(mMaxSodium.getText().toString()));
+        LoginActivity.u.addCalories(Integer.parseInt(mMinCalories.getText().toString()));
+        LoginActivity.u.addCalories(Integer.parseInt(mMaxCalories.getText().toString()));
+        LoginActivity.u.addFiber(Integer.parseInt(mMinFiber.getText().toString()));
+        LoginActivity.u.addFiber(Integer.parseInt(mMaxFiber.getText().toString()));
+
+        databaseUsers.child(userID).child("fat").child("").setValue(LoginActivity.u.getFat());
+        databaseUsers.child(userID).child("fiber").child("").setValue(LoginActivity.u.getFiber());
+        databaseUsers.child(userID).child("sodium").child("").setValue(LoginActivity.u.getSodium());
+        databaseUsers.child(userID).child("calories").child("").setValue(LoginActivity.u.getCalories());
+        databaseUsers.child(userID).child("carbs").child("").setValue(LoginActivity.u.getCarbs());
+        databaseUsers.child(userID).child("sugar").child("").setValue(LoginActivity.u.getSugar());
         databaseUsers.child(userID).child("likes").child("").setValue(LoginActivity.u.getLikes());
         databaseUsers.child(userID).child("dislikes").child("").setValue(LoginActivity.u.getDislikes());
         databaseUsers.child(userID).child("dietChoice").child("").setValue(LoginActivity.u.getDietChoice());
