@@ -167,6 +167,12 @@ public class LoginActivity extends AppCompatActivity{
             }
             else{
                 setContentView(R.layout.activity_search);
+//                Intent searchIntent = new Intent(LoginActivity.this, SearchActivity.class);
+//                Intent intent = getIntent();
+//                String userID = intent.getStringExtra("ID");
+//                searchIntent.putExtra("ID",userID);
+//                startActivity(searchIntent);
+
                 Button mEmailSignOutButton = (Button) findViewById(R.id.sign_out_button);
                 mEmailSignOutButton.setOnClickListener(new OnClickListener() {
                     @Override

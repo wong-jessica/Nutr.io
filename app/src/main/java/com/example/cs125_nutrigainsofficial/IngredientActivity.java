@@ -66,6 +66,11 @@ public class IngredientActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 setContentView(R.layout.activity_search);
+//                Intent searchIntent = new Intent(IngredientActivity.this, SearchActivity.class);
+//                Intent intent = getIntent();
+//                String userID = intent.getStringExtra("ID");
+//                searchIntent.putExtra("ID",userID);
+//                startActivity(searchIntent);
             }
         });
 
