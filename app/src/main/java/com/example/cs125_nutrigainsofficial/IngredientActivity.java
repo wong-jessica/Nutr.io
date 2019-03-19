@@ -1,6 +1,5 @@
 package com.example.cs125_nutrigainsofficial;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -10,6 +9,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 public class IngredientActivity extends AppCompatActivity {
     ArrayList<String> ingredientItemsList =new ArrayList<>();
     ArrayAdapter<String> adapter;
-
+    private FirebaseAuth mAuth;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference databaseUsers = database.getReference("users");
 
@@ -28,20 +29,21 @@ public class IngredientActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ingredient);
         FirebaseApp.initializeApp(this);
+        mAuth = FirebaseAuth.getInstance();
     }
 
     @Override
      protected void onStart() {
         super.onStart();
 
-        Intent intent = getIntent();
-        final String userID = intent.getStringExtra("ID");
+        //Intent intent = getIntent();
+        //final String userID = intent.getStringExtra("ID");
 
         final EditText newIngredienteditText = findViewById(R.id.newIngredienteditText);
         ListView IngredientListView = findViewById(R.id.IngredietListView);
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, ingredientItemsList);
         IngredientListView.setAdapter(adapter);
-
+        final FirebaseUser user = mAuth.getCurrentUser();
         Button addButton = findViewById(R.id.addButton);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,7 +55,7 @@ public class IngredientActivity extends AppCompatActivity {
                     ingredientItemsList.add(i);
                     adapter.notifyDataSetChanged();
                 }
-                databaseUsers.child(userID).child("ingredients").child("").setValue(LoginActivity.u.getIngredients());
+                databaseUsers.child(user.getUid()).child("ingredients").child("").setValue(LoginActivity.u.getIngredients());
                 newIngredienteditText.setText("");
             };
 

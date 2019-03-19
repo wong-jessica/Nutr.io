@@ -11,6 +11,7 @@ import android.widget.EditText;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -91,8 +92,8 @@ public class InputPreferencesActivity extends AppCompatActivity{
     }
 
     public void getPreferences(){
-        Intent intent = getIntent();
-        String userID = intent.getStringExtra("ID");
+        //Intent intent = getIntent();
+        //String userID = intent.getStringExtra("ID");
         String[] allergies = mAllergies.getText().toString().split(",");
         for(String m: allergies){
             LoginActivity.u.addAllergies(m);
@@ -103,7 +104,7 @@ public class InputPreferencesActivity extends AppCompatActivity{
             LoginActivity.u.addLikes(m);
         }
 
-        String[] dislikes = mLikes.getText().toString().split(",");
+        String[] dislikes = mDislikes.getText().toString().split(",");
         for(String m: dislikes){
             LoginActivity.u.addDislikes(m);
         }
@@ -113,29 +114,52 @@ public class InputPreferencesActivity extends AppCompatActivity{
             LoginActivity.u.addReligious(m);
         }
 
-        LoginActivity.u.addFat(Integer.parseInt(mMinFat.getText().toString().trim()));
-        LoginActivity.u.addFat(Integer.parseInt(mMaxFat.getText().toString().trim()));
-        LoginActivity.u.addCarbs(Integer.parseInt(mMinCarbs.getText().toString().trim()));
-        LoginActivity.u.addCarbs(Integer.parseInt(mMaxCarbs.getText().toString().trim()));
-        LoginActivity.u.addSugar(Integer.parseInt(mMinSugar.getText().toString().trim()));
-        LoginActivity.u.addSugar(Integer.parseInt(mMaxSugar.getText().toString().trim()));
-        LoginActivity.u.addSodium(Integer.parseInt(mMinSodium.getText().toString().trim()));
-        LoginActivity.u.addSodium(Integer.parseInt(mMaxSodium.getText().toString().trim()));
-        LoginActivity.u.addCalories(Integer.parseInt(mMinCalories.getText().toString().trim()));
-        LoginActivity.u.addCalories(Integer.parseInt(mMaxCalories.getText().toString().trim()));
-        LoginActivity.u.addFiber(Integer.parseInt(mMinFiber.getText().toString().trim()));
-        LoginActivity.u.addFiber(Integer.parseInt(mMaxFiber.getText().toString().trim()));
+        try {
+            if (mMinFat.getText().toString().trim() != "") {
+                LoginActivity.u.getFat().set(0, Integer.parseInt(mMinFat.getText().toString().trim()));
+                LoginActivity.u.getFat().set(1, Integer.parseInt(mMaxFat.getText().toString().trim()));
+            }
 
-        databaseUsers.child(userID).child("fat").child("").setValue(LoginActivity.u.getFat());
-        databaseUsers.child(userID).child("fiber").child("").setValue(LoginActivity.u.getFiber());
-        databaseUsers.child(userID).child("sodium").child("").setValue(LoginActivity.u.getSodium());
-        databaseUsers.child(userID).child("calories").child("").setValue(LoginActivity.u.getCalories());
-        databaseUsers.child(userID).child("carbs").child("").setValue(LoginActivity.u.getCarbs());
-        databaseUsers.child(userID).child("sugar").child("").setValue(LoginActivity.u.getSugar());
-        databaseUsers.child(userID).child("likes").child("").setValue(LoginActivity.u.getLikes());
-        databaseUsers.child(userID).child("dislikes").child("").setValue(LoginActivity.u.getDislikes());
-        databaseUsers.child(userID).child("dietChoice").child("").setValue(LoginActivity.u.getDietChoice());
-        databaseUsers.child(userID).child("allergies").child("").setValue(LoginActivity.u.getAllergies());
-        databaseUsers.child(userID).child("religious").child("").setValue(LoginActivity.u.getReligious());
+            if (mMinCarbs.getText().toString().trim() != "") {
+                LoginActivity.u.getCarbs().set(0, Integer.parseInt(mMinCarbs.getText().toString().trim()));
+                LoginActivity.u.getCarbs().set(1, Integer.parseInt(mMaxCarbs.getText().toString().trim()));
+            }
+
+            if (mMinSugar.getText().toString().trim() != "") {
+                LoginActivity.u.getSugar().set(0, Integer.parseInt(mMinSugar.getText().toString().trim()));
+                LoginActivity.u.getSugar().set(1, Integer.parseInt(mMaxSugar.getText().toString().trim()));
+            }
+
+            if (mMinSodium.getText().toString().trim() != "") {
+                LoginActivity.u.getSodium().set(0, Integer.parseInt(mMinSodium.getText().toString().trim()));
+                LoginActivity.u.getSodium().set(1, Integer.parseInt(mMaxSodium.getText().toString().trim()));
+            }
+
+            if (mMinCalories.getText().toString().trim() != "") {
+                LoginActivity.u.getCalories().set(0, Integer.parseInt(mMinCalories.getText().toString().trim()));
+                LoginActivity.u.getCalories().set(1, Integer.parseInt(mMaxCalories.getText().toString().trim()));
+            }
+
+            if (mMinFiber.getText().toString().trim() != "") {
+                LoginActivity.u.getFiber().set(0, Integer.parseInt(mMinFiber.getText().toString().trim()));
+                LoginActivity.u.getFiber().set(1, Integer.parseInt(mMaxFiber.getText().toString().trim()));
+            }
+        }
+        catch (Exception e){
+
+        }
+
+        FirebaseUser user = mAuth.getCurrentUser();
+        databaseUsers.child(user.getUid()).child("fat").child("").setValue(LoginActivity.u.getFat());
+        databaseUsers.child(user.getUid()).child("fiber").child("").setValue(LoginActivity.u.getFiber());
+        databaseUsers.child(user.getUid()).child("sodium").child("").setValue(LoginActivity.u.getSodium());
+        databaseUsers.child(user.getUid()).child("calories").child("").setValue(LoginActivity.u.getCalories());
+        databaseUsers.child(user.getUid()).child("carbs").child("").setValue(LoginActivity.u.getCarbs());
+        databaseUsers.child(user.getUid()).child("sugar").child("").setValue(LoginActivity.u.getSugar());
+        databaseUsers.child(user.getUid()).child("likes").child("").setValue(LoginActivity.u.getLikes());
+        databaseUsers.child(user.getUid()).child("dislikes").child("").setValue(LoginActivity.u.getDislikes());
+        databaseUsers.child(user.getUid()).child("dietChoice").child("").setValue(LoginActivity.u.getDietChoice());
+        databaseUsers.child(user.getUid()).child("allergies").child("").setValue(LoginActivity.u.getAllergies());
+        databaseUsers.child(user.getUid()).child("religious").child("").setValue(LoginActivity.u.getReligious());
     }
 }

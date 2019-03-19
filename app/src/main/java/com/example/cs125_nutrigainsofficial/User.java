@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class User {
     private String userId;
+    //private String authID;
     private String email;
     private String username;
     private String age;
@@ -28,6 +29,19 @@ public class User {
         this.username = name;
         this.age = age;
         this.gender = gender;
+        this.fat.add(30);
+        this.fat.add(50);
+        this.fiber.add(30);
+        this.fiber.add(50);
+        this.sodium.add(30);
+        this.sodium.add(50);
+        this.calories.add(30);
+        this.calories.add(50);
+        this.carbs.add(30);
+        this.carbs.add(50);
+        this.sugar.add(30);
+        this.sugar.add(50);
+        //this.authID = authid;
     }
 
     public String getAge(){return age;}
