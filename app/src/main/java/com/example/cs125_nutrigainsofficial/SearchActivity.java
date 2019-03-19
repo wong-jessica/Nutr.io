@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.google.firebase.FirebaseApp;
@@ -24,9 +25,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SearchActivity extends AppCompatActivity{
-    private List<RecipeCard> recipeList;
-    private RecipeAdapter recipeAdapter;
-//    final String userID = getIntent().getStringExtra("ID");
+    private List<ArrayList<String>> recipeList;
+    private ArrayAdapter<ArrayList<String>> adapter;
+    //final String userID = getIntent().getStringExtra("ID");
     private static final String TAG = SearchActivity.class.getName();
 
 
@@ -39,7 +40,6 @@ public class SearchActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         FirebaseApp.initializeApp(SearchActivity.this);
-        Log.d(TAG, "oncreate at least??");
 
 //        fillRecipeList();
 //        connectRecyclerView();
@@ -51,7 +51,6 @@ public class SearchActivity extends AppCompatActivity{
 
 //        fillRecipeList();
 //        connectRecyclerView();
-        Log.d(TAG, "DO STUFF");
 
         TextView recipe_url = (TextView) findViewById(R.id.recipe_url);
         recipe_url.setText("TEST PLS");
@@ -59,10 +58,7 @@ public class SearchActivity extends AppCompatActivity{
         userDB.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-//                User user = dataSnapshot.getValue(User.class);
-                Log.i("SearchActivity:", createQueryCall("Chicken"));
-//                TextView recipe_url = findViewById(R.id.recipe_url);
-//                recipe_url.setText(createQueryCall(user,"Chicken"));
+
             }
 
             @Override
@@ -74,12 +70,25 @@ public class SearchActivity extends AppCompatActivity{
 
 
     private void fillRecipeList() {
-        recipeList = new ArrayList<>();
+        ArrayList<String> recipe = new ArrayList<>();
         // will eventually fill out using parsed json recipe response from API
-        // for now using hardcoded inputs
-        String url1 = "http://3.bp.blogspot.com/-SLTPZFJnASs/TuXhjiHBbfI/AAAAAAAAAXk/jp35R_rahQ4/s1600/19a58e6b382be502_This_cute_car_like_sticking_tongue_out_1_.jpg";
-        recipeList.add(new RecipeCard(url1, "Chicken Adobo", "Filipino Cuisine Central", "100", "4.9", "chicken, rice, peppercorn, vinegar"));
-        recipeList.add(new RecipeCard(url1, "Waffles", "Breakfast Club", "123", "3.8", "flour, egg, milk, chocolate chips"));
+        // for now using hardcoded input
+        String image = "http://3.bp.blogspot.com/-SLTPZFJnASs/TuXhjiHBbfI/AAAAAAAAAXk/jp35R_rahQ4/s1600/19a58e6b382be502_This_cute_car_like_sticking_tongue_out_1_.jpg";
+        String title = "Chicken Adobo";
+        String source = "Breakfast Club";
+        String rating = "4.5";
+        String ingredients = "flour, egg, milk, chocolate chips";
+        recipe.add(image);
+        recipe.add(title);
+        recipe.add(source);
+        recipe.add(rating);
+        recipe.add(ingredients);
+        //recipeList.add(new RecipeCard(url1, "Chicken Adobo", "Filipino Cuisine Central", "100", "4.9", "chicken, rice, peppercorn, vinegar"));
+        //recipeList.add(new RecipeCard(url1, "Waffles", "Breakfast Club", "123", "3.8", "flour, egg, milk, chocolate chips"));
+        recipeList.add(recipe);
+        RecyclerView recipeResults = findViewById(R.id.recipe_results);
+        adapter = new ArrayAdapter<>(this, android.R.layout.)
+
     }
 
 //    private void connectRecyclerView() {
@@ -103,15 +112,16 @@ public class SearchActivity extends AppCompatActivity{
 
     /**
      * Takes a query and returns a url to send to YummlyAPI.
+     * @param user The user object that hold's preferences
      * @param q The user's inputted query.
      * @return A URL.
      */
-    public String createQueryCall(String q) {
+    public String createQueryCall(User user, String q) {
         final String APP_ID = "e6ee5f7d";
         final String APP_KEY = "bcf55972e39b5e7f20d9b329569a0359";
         String url = String.format("http://api.yummly.com/v1/api/recipes?_app_id=%s&_app_key=%s?", APP_ID, APP_KEY);
         String query = "";
-        User user = LoginActivity.u;
+
 
         ArrayList<String> likes = user.getLikes();
         ArrayList<String> dislikes = user.getDislikes();
@@ -136,6 +146,7 @@ public class SearchActivity extends AppCompatActivity{
 //            }
 //        }
 
+        Log.i(TAG, "HELLOO");
         if(!dislikes.isEmpty()) {
             for (String s : dislikes) {
                 query += "excludedIngredient[]=" + encode(s) + "&";
@@ -201,9 +212,9 @@ public class SearchActivity extends AppCompatActivity{
         return url + query;
     }
 
-//    public static String createQueryCall(String q) {
-//        return createQueryCall(LoginActivity.u, q);
-//    }
+    public String createQueryCall(String q) {
+        return createQueryCall(LoginActivity.u, q);
+    }
 
 //    public static void main(String args[]) {
 //        System.out.println(createQueryCall("hello there", [], [], []));

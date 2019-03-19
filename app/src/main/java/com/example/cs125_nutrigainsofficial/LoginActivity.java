@@ -17,8 +17,11 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 //import android.support.design.widget.Snackbar;
 
@@ -165,23 +168,23 @@ public class LoginActivity extends AppCompatActivity{
                 goToPreferences();
             }
             else{
-                setContentView(R.layout.activity_search);
-//                Intent searchIntent = new Intent(LoginActivity.this, SearchActivity.class);
-//                Intent intent = getIntent();
-//                String userID = intent.getStringExtra("ID");
-//                searchIntent.putExtra("ID",userID);
-//                startActivity(searchIntent);
+//                setContentView(R.layout.activity_search);
+                Intent searchIntent = new Intent(LoginActivity.this, SearchActivity.class);
+                Intent intent = getIntent();
+                String userID = intent.getStringExtra("ID");
+                searchIntent.putExtra("ID",userID);
+                startActivity(searchIntent);
 
-                Button mEmailSignOutButton = (Button) findViewById(R.id.sign_out_button);
-                mEmailSignOutButton.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        mAuth.signOut();
-                        //System.out.println(mAuth.getCurrentUser().getEmail());
-                        setContentView(R.layout.activity_login);
-                        updateUI(mAuth.getCurrentUser(),false);
-                    }
-                });
+//                Button mEmailSignOutButton = (Button) findViewById(R.id.sign_out_button);
+//                mEmailSignOutButton.setOnClickListener(new OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        mAuth.signOut();
+//                        //System.out.println(mAuth.getCurrentUser().getEmail());
+//                        setContentView(R.layout.activity_login);
+//                        updateUI(mAuth.getCurrentUser(),false);
+//                    }
+//                });
             }
         }
     }
