@@ -1,14 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_margin="8dp">
+
+    <android.support.v7.widget.SearchView
+        android:id="@+id/recipe_search"
+        android:title="SearchRecipes"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        app:iconifiedByDefault="false"
+        app:queryHint="Search Recipes"/>
+
+    <TextView
+        android:id="@+id/recipe_url"
+        android:text="@string/recipe_url"
+        android:layout_below="@id/recipe_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <!--<android.support.v7.widget.RecyclerView-->
+        <!--android:id="@+id/recipe_results"-->
+        <!--android:layout_below="@id/recipe_search"-->
+        <!--android:layout_above="@id/sign_out_button"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"/>-->
 
     <Button
         android:id="@+id/sign_out_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="110dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="20dp"
         android:text="Sign Out" />
 </RelativeLayout>
