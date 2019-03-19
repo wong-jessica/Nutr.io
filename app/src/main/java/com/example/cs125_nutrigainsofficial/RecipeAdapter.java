@@ -14,7 +14,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder> {
+public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder> implements Filterable{
     private List<RecipeCard> recipeList;
     private List<RecipeCard> recipeListFilled;
 
@@ -64,4 +64,41 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     public int getItemCount() {
         return recipeList.size();
     }
+
+    @Override
+    public Filter getFilter() {
+        return recipeFilter;
+    }
+
+    private Filter recipeFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence query) {
+            List<RecipeCard> filteredRecipe = new ArrayList<>();
+
+            if (query == null || query.length() == 0) {
+                filteredRecipe.addAll(recipeListFilled);
+            }
+            else {
+                String filterBy = query.toString().toLowerCase().trim();
+
+                for (RecipeCard recipe : recipeListFilled) {
+                    if (recipe.getRecipeName().toLowerCase().contains(filterBy)) {
+                        filteredRecipe.add(recipe);
+                    }
+                }
+            }
+
+            FilterResults recipeResults = new FilterResults();
+            recipeResults.values = filteredRecipe;
+
+            return recipeResults;
+        }
+
+        @Override
+        protected void publishResults(CharSequence query, FilterResults results) {
+            recipeList.clear();
+            recipeList.addAll((List) results.values);
+            notifyDataSetChanged();
+        }
+    };
 }

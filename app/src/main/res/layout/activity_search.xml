@@ -6,20 +6,20 @@
     android:layout_height="match_parent"
     android:layout_margin="8dp">
 
-    <android.support.v7.widget.SearchView
-        android:id="@+id/recipe_search"
-        android:title="SearchRecipes"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        app:iconifiedByDefault="false"
-        app:queryHint="Search Recipes"/>
+    <!--<android.support.v7.widget.SearchView-->
+        <!--android:id="@+id/recipe_search"-->
+        <!--android:title="SearchRecipes"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--app:iconifiedByDefault="false"-->
+        <!--app:queryHint="Search Recipes"/>-->
 
-    <TextView
-        android:id="@+id/recipe_url"
-        android:text="@string/recipe_url"
-        android:layout_below="@id/recipe_search"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <!--<TextView-->
+        <!--android:id="@+id/recipe_url"-->
+        <!--android:text="@string/recipe_url"-->
+        <!--android:layout_below="@id/recipe_search"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content" />-->
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recipe_results"
