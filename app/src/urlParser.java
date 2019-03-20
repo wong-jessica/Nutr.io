@@ -155,17 +155,23 @@ public class urlParser {
 		urlParser http = new urlParser();//<-NOTE: name of constructor is name of file(___.java / public class ___)
 		String response = http.sendGet(url);
 		jsonObject searchResults = jsonObjParse(response,2);//0 is "{" and 1 is quote, so we skip 2
-		recipe[] recipes = new recipe[10];
-		for(int i=0; i<10; i++) {
+		int length = searchResults.oGetArr("matches").aObj.size();
+		recipe[] recipes = new recipe[length];
+		for(int i=0; i<length; i++)
 			recipes[i] = new recipe(searchResults,i);
-		}
 		return recipes;
+	}
+	static String recipeSite(String url) throws Exception{
+		urlParser http = new urlParser();//<-NOTE: name of constructor is name of file(___.java / public class ___)
+		String response = http.sendGet(url);
+		jsonObject searchResults = jsonObjParse(response,2);//0 is "{" and 1 is quote, so we skip 2
+		return searchResults.oGetObj("attribution").oGetStr("url");
 	}
 	
 //	public static void main(String[] args) throws Exception {
-//		sandbox http = new sandbox();//<-NOTE: name of constructor is name of file(___.java / public class ___)
-//		String ss = http.sendGet("http://api.yummly.com/v1/api/recipe/Meatball-Parmesan-Casserole-2626493?_app_id=e6ee5f7d&_app_key=bcf55972e39b5e7f20d9b329569a0359"); //System.out.println(ss.length());
-//		jsonObject searchResults = jsonObjParse(ss,2);//0 is "{" and 1 is quote, so we skip 2
-//		System.out.println("\n~~ "+ searchResults.oGetObj("attributes").oGetArr("course").aGetStr(0) );
+//		String url = "http://api.yummly.com/v1/api/recipes?_app_id=e6ee5f7d&_app_key=bcf55972e39b5e7f20d9b329569a0359";
+//		recipe[] recipes = getRecipes(url);
+//		System.out.println(recipes[4].source);
+//		System.out.println(recipeSite("http://api.yummly.com/v1/api/recipe/Meatball-Parmesan-Casserole-2626493?_app_id=e6ee5f7d&_app_key=bcf55972e39b5e7f20d9b329569a0359"));
 //	}
 }
