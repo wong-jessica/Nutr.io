@@ -1,13 +1,23 @@
 package com.example.cs125_nutrigainsofficial;
 
+import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
+import android.support.v7.widget.SearchView;
 import android.widget.TextView;
 
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -20,8 +30,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SearchActivity extends AppCompatActivity{
-    private List<ArrayList<String>> recipeList;
-    private ArrayAdapter<ArrayList<String>> adapter;
+    private RecipeAdapter adapter;
+    private List<RecipeCard> recipeList;
     //final String userID = getIntent().getStringExtra("ID");
     private static final String TAG = SearchActivity.class.getName();
 
@@ -34,10 +44,10 @@ public class SearchActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        FirebaseApp.initializeApp(SearchActivity.this);
+//        FirebaseApp.initializeApp(SearchActivity.this);
 
-//        fillRecipeList();
-//        connectRecyclerView();
+        fillRecipeList();
+        connectRecyclerView();
     }
 
     @Override
@@ -47,54 +57,65 @@ public class SearchActivity extends AppCompatActivity{
 //        fillRecipeList();
 //        connectRecyclerView();
 
-        TextView recipe_url = (TextView) findViewById(R.id.recipe_url);
-        recipe_url.setText("TEST PLS");
+//        TextView recipe_url = (TextView) findViewById(R.id.recipe_url);
+//        recipe_url.setText("TEST PLS");
 
-        userDB.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                Log.w("Unable to retrieve: ", error.toException());
-            }
-        });
+//        SearchView recipeSearch = findViewById(R.id.recipe_search);
+//        final String searchQuerry = recipeSearch.getQuery().toString();
+//        createQueryCall(searchQuerry);
     }
 
 
     private void fillRecipeList() {
-        ArrayList<String> recipe = new ArrayList<>();
-        // will eventually fill out using parsed json recipe response from API
-        // for now using hardcoded input
+        recipeList = new ArrayList<>();
         String image = "http://3.bp.blogspot.com/-SLTPZFJnASs/TuXhjiHBbfI/AAAAAAAAAXk/jp35R_rahQ4/s1600/19a58e6b382be502_This_cute_car_like_sticking_tongue_out_1_.jpg";
-        String title = "Chicken Adobo";
-        String source = "Breakfast Club";
-        String rating = "4.5";
-        String ingredients = "flour, egg, milk, chocolate chips";
-        recipe.add(image);
-        recipe.add(title);
-        recipe.add(source);
-        recipe.add(rating);
-        recipe.add(ingredients);
-        //recipeList.add(new RecipeCard(url1, "Chicken Adobo", "Filipino Cuisine Central", "100", "4.9", "chicken, rice, peppercorn, vinegar"));
-        //recipeList.add(new RecipeCard(url1, "Waffles", "Breakfast Club", "123", "3.8", "flour, egg, milk, chocolate chips"));
-        recipeList.add(recipe);
-        RecyclerView recipeResults = findViewById(R.id.recipe_results);
-        //adapter = new ArrayAdapter<>(this, android.R.layout.)
-
+//        String title = "Chicken Adobo";
+//        String source = "Breakfast Club";
+//        String rating = "4.5";
+//        String ingredients = "flour, egg, milk, chocolate chips";
+//        recipe.add(image);
+//        recipe.add(title);
+//        recipe.add(source);
+//        recipe.add(rating);
+//        recipe.add(ingredients);
+        recipeList.add(new RecipeCard(image, "Chicken Adobo", "Filipino Cuisine Central", "100", "4.9", "chicken, rice, peppercorn, vinegar"));
+        recipeList.add(new RecipeCard(image, "Waffles", "Breakfast Club", "123", "3.8", "flour, egg, milk, chocolate chips"));
     }
 
-//    private void connectRecyclerView() {
-//        RecyclerView recipeResults = findViewById(R.id.recipe_results);
-////        recipeResults.setHasFixedSize(false);
-//        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-//        recipeAdapter = new RecipeAdapter(recipeList);
-//
-//        recipeResults.setLayoutManager(layoutManager);
-//        recipeResults.setAdapter(recipeAdapter);
-//    }
+    private void connectRecyclerView() {
+        RecyclerView recipeResults = findViewById(R.id.recipe_results);
+        recipeResults.setHasFixedSize(true);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(SearchActivity.this);
+        adapter = new RecipeAdapter(recipeList);
+
+        recipeResults.setLayoutManager(layoutManager);
+        recipeResults.setAdapter(adapter);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.recipe_menu, menu);
+
+        MenuItem searchRecipe = menu.findItem(R.id.recipe_search);
+        SearchView searchView = (SearchView) searchRecipe.getActionView();
+
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newQuery) {
+                adapter.getFilter().filter(newQuery);
+                return false;
+            }
+        });
+        return true;
+    }
 
     public static String encode(String s) {
         try {
@@ -107,16 +128,15 @@ public class SearchActivity extends AppCompatActivity{
 
     /**
      * Takes a query and returns a url to send to YummlyAPI.
-     * @param user The user object that hold's preferences
      * @param q The user's inputted query.
      * @return A URL.
      */
-    public String createQueryCall(User user, String q) {
+    public String createQueryCall(String q) {
         final String APP_ID = "e6ee5f7d";
         final String APP_KEY = "bcf55972e39b5e7f20d9b329569a0359";
         String url = String.format("http://api.yummly.com/v1/api/recipes?_app_id=%s&_app_key=%s?", APP_ID, APP_KEY);
         String query = "";
-
+        User user = LoginActivity.u;
 
         ArrayList<String> likes = user.getLikes();
         ArrayList<String> dislikes = user.getDislikes();
@@ -206,12 +226,4 @@ public class SearchActivity extends AppCompatActivity{
         query += "requirePictures=true";
         return url + query;
     }
-
-    public String createQueryCall(String q) {
-        return createQueryCall(LoginActivity.u, q);
-    }
-
-//    public static void main(String args[]) {
-//        System.out.println(createQueryCall("hello there", [], [], []));
-//    }
 }
