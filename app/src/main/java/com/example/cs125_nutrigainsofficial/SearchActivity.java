@@ -34,34 +34,20 @@ public class SearchActivity extends AppCompatActivity{
     private List<RecipeCard> recipeList;
     private static final String TAG = SearchActivity.class.getName();
 
-    private FirebaseDatabase FirebaseDB = FirebaseDatabase.getInstance();
-    private DatabaseReference userDB = FirebaseDB.getReference("users");
-    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    private FirebaseUser currentUserID = mAuth.getCurrentUser();
-    private DatabaseReference user = userDB.child(currentUserID.getUid());
+//    private FirebaseDatabase FirebaseDB = FirebaseDatabase.getInstance();
+//    private DatabaseReference userDB = FirebaseDB.getReference("users");
+//    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+//    private FirebaseUser currentUserID = mAuth.getCurrentUser();
+//    private DatabaseReference user = userDB.child(currentUserID.getUid());
+
+    private UserDatabase userDatabase;
+    private User db = userDatabase.userRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        FirebaseApp.initializeApp(SearchActivity.this);
 
-        user.child("ingredients").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    String ingredient = child.getValue(String.class);
-                    Log.i(TAG, "HELLO" + ingredient);
-//                    Log.i(TAG, "HELLOO" + details.getAge());
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {}
-        });
-
-        Log.i(TAG,"THIS");
-        Log.i(TAG,createQueryCall("Chicken"));
         fillRecipeList();
         connectRecyclerView();
     }
