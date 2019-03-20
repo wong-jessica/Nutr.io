@@ -44,18 +44,16 @@ public class SearchActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-//        FirebaseApp.initializeApp(SearchActivity.this);
+        FirebaseApp.initializeApp(SearchActivity.this);
 
-        user.child("age").addValueEventListener(new ValueEventListener() {
+        user.child("ingredients").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String age = dataSnapshot.getValue(String.class);
-                Log.i(TAG,"AGE"+age);
-//                for (DataSnapshot child : dataSnapshot.getChildren()) {
-////                    User details = child.getValue(User.class);
-//                    Log.i(TAG, child.getValue("age"));
-////                    Log.i(TAG, "HELLOO" + details.getAge());
-//                }
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    String ingredient = child.getValue(String.class);
+                    Log.i(TAG, "HELLO" + ingredient);
+//                    Log.i(TAG, "HELLOO" + details.getAge());
+                }
             }
 
             @Override
