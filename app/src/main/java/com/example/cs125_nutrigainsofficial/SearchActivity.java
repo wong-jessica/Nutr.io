@@ -32,20 +32,36 @@ import java.util.List;
 public class SearchActivity extends AppCompatActivity{
     private RecipeAdapter adapter;
     private List<RecipeCard> recipeList;
-    //final String userID = getIntent().getStringExtra("ID");
     private static final String TAG = SearchActivity.class.getName();
-
 
     private FirebaseDatabase FirebaseDB = FirebaseDatabase.getInstance();
     private DatabaseReference userDB = FirebaseDB.getReference("users");
-//    private FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private FirebaseUser currentUserID = mAuth.getCurrentUser();
+    private DatabaseReference user = userDB.child(currentUserID.getUid());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-//        FirebaseApp.initializeApp(SearchActivity.this);
+        FirebaseApp.initializeApp(SearchActivity.this);
 
+        user.child("ingredients").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    String ingredient = child.getValue(String.class);
+                    Log.i(TAG, "HELLO" + ingredient);
+//                    Log.i(TAG, "HELLOO" + details.getAge());
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+
+        Log.i(TAG,"THIS");
+        Log.i(TAG,createQueryCall("Chicken"));
         fillRecipeList();
         connectRecyclerView();
     }
@@ -53,16 +69,6 @@ public class SearchActivity extends AppCompatActivity{
     @Override
     protected void onStart() {
         super.onStart();
-
-//        fillRecipeList();
-//        connectRecyclerView();
-
-//        TextView recipe_url = (TextView) findViewById(R.id.recipe_url);
-//        recipe_url.setText("TEST PLS");
-
-//        SearchView recipeSearch = findViewById(R.id.recipe_search);
-//        final String searchQuerry = recipeSearch.getQuery().toString();
-//        createQueryCall(searchQuerry);
     }
 
 
@@ -117,7 +123,7 @@ public class SearchActivity extends AppCompatActivity{
         return true;
     }
 
-    public static String encode(String s) {
+    private static String encode(String s) {
         try {
             String encoded = URLEncoder.encode(s, "UTF-8");
             return encoded;
@@ -131,99 +137,98 @@ public class SearchActivity extends AppCompatActivity{
      * @param q The user's inputted query.
      * @return A URL.
      */
-    public String createQueryCall(String q) {
+    private static String createQueryCall(String q) {
         final String APP_ID = "e6ee5f7d";
         final String APP_KEY = "bcf55972e39b5e7f20d9b329569a0359";
         String url = String.format("http://api.yummly.com/v1/api/recipes?_app_id=%s&_app_key=%s?", APP_ID, APP_KEY);
         String query = "";
-        User user = LoginActivity.u;
-
-        ArrayList<String> likes = user.getLikes();
-        ArrayList<String> dislikes = user.getDislikes();
-        ArrayList<String> dietChoice = user.getDietChoice();
-        ArrayList<String> allergies = user.getAllergies();
-        ArrayList<String> religious = user.getReligious();
-        ArrayList<Integer> calories = user.getCalories();
-        ArrayList<Integer> carbs = user.getCarbs();
-        ArrayList<Integer> fat = user.getFat();
-        ArrayList<Integer> fiber = user.getFiber();
-        ArrayList<Integer> sodium = user.getSodium();
-        ArrayList<Integer> sugar = user.getSugar();
-        ArrayList<String> ingredients = user.getIngredients();
-
-        if(!q.isEmpty()) {
-            query += "q=" + encode(q) + "&";
-        }
-
-//        if(!likes.isEmpty()) {
-//            for (String s : likes) {
-//                // algorithm to preference foods with likes
+//
+//        ArrayList<String> likes = user.getLikes();
+//        ArrayList<String> dislikes = user.getDislikes();
+//        ArrayList<String> dietChoice = user.getDietChoice();
+//        ArrayList<String> allergies = user.getAllergies();
+//        ArrayList<String> religious = user.getReligious();
+//        ArrayList<Integer> calories = user.getCalories();
+//        ArrayList<Integer> carbs = user.getCarbs();
+//        ArrayList<Integer> fat = user.getFat();
+//        ArrayList<Integer> fiber = user.getFiber();
+//        ArrayList<Integer> sodium = user.getSodium();
+//        ArrayList<Integer> sugar = user.getSugar();
+//        ArrayList<String> ingredients = user.getIngredients();
+//
+//        if(!q.isEmpty()) {
+//            query += "q=" + encode(q) + "&";
+//        }
+//
+////        if(!likes.isEmpty()) {
+////            for (String s : likes) {
+////                // algorithm to preference foods with likes
+////            }
+////        }
+//
+//        Log.i(TAG, "HELLOO");
+//        if(!dislikes.isEmpty()) {
+//            for (String s : dislikes) {
+//                query += "excludedIngredient[]=" + encode(s) + "&";
 //            }
 //        }
-
-        Log.i(TAG, "HELLOO");
-        if(!dislikes.isEmpty()) {
-            for (String s : dislikes) {
-                query += "excludedIngredient[]=" + encode(s) + "&";
-            }
-        }
-
-//        if(!ingredients.isEmpty()) {
-//            for (String s : ingredients) {
-//                query += "allowedIngredient[]=" + encode(s) + "&";
-//                // algorithm to preference foods with already owned ingredients
+//
+////        if(!ingredients.isEmpty()) {
+////            for (String s : ingredients) {
+////                query += "allowedIngredient[]=" + encode(s) + "&";
+////                // algorithm to preference foods with already owned ingredients
+////            }
+////        }
+//
+//        if(!dietChoice.isEmpty()) {
+//            for (String s : dietChoice) {
+//                query += "allowedDiet[]=" + encode(s) + "&";
 //            }
 //        }
-
-        if(!dietChoice.isEmpty()) {
-            for (String s : dietChoice) {
-                query += "allowedDiet[]=" + encode(s) + "&";
-            }
-        }
-
-        if(!allergies.isEmpty()) {
-            for (String s : allergies) {
-                query += "allowedAllergy[]=" + encode(s) + "&";
-            }
-        }
-
-//        if(!religious.isEmpty()) {
+//
+//        if(!allergies.isEmpty()) {
 //            for (String s : allergies) {
 //                query += "allowedAllergy[]=" + encode(s) + "&";
 //            }
 //        }
-
-        if(!fat.isEmpty()) {
-            query += String.format("nutrition.FAT.min=%" + (float)fat.get(0)/1000 +
-                    "&nutrition.FAT.max="+ (float)fat.get(1)/1000) + "&";
-        }
-
-        if(!fiber.isEmpty()) {
-            query += String.format("nutrition.FIBTG.min=%" + (float)fiber.get(0)/1000 +
-                    "&nutrition.FIBTG.max="+ (float)fiber.get(1)/1000) + "&";
-        }
-
-        if(!sodium.isEmpty()) {
-            query += String.format("nutrition.NA.min=%" + (float)sodium.get(0)/1000 +
-                    "&nutrition.NA.max="+ (float)sodium.get(1)/1000) + "&";
-        }
-
-        if(!calories.isEmpty()) {
-            query += String.format("nutrition.ENERC_KCAL.min=%" + (float)calories.get(0)/1000 +
-                    "&nutrition.ENERC_KCAL.max="+ (float)calories.get(1)/1000) + "&";
-        }
-
-        if(!carbs.isEmpty()) {
-            query += String.format("nutrition.CHOCDF.min=%" + (float)carbs.get(0)/1000 +
-                    "&nutrition.CHOCDF.max="+ (float)carbs.get(1)/1000) + "&";
-        }
-
-        if(!sugar.isEmpty()) {
-            query += String.format("nutrition.SUGAR.min=%" + (float)sugar.get(0)/1000 +
-                    "&nutrition.SUGAR.max="+ (float)sugar.get(1)/1000) + "&";
-        }
-
-        query += "requirePictures=true";
-        return url + query;
+//
+////        if(!religious.isEmpty()) {
+////            for (String s : allergies) {
+////                query += "allowedAllergy[]=" + encode(s) + "&";
+////            }
+////        }
+//
+//        if(!fat.isEmpty()) {
+//            query += String.format("nutrition.FAT.min=%" + (float)fat.get(0)/1000 +
+//                    "&nutrition.FAT.max="+ (float)fat.get(1)/1000) + "&";
+//        }
+//
+//        if(!fiber.isEmpty()) {
+//            query += String.format("nutrition.FIBTG.min=%" + (float)fiber.get(0)/1000 +
+//                    "&nutrition.FIBTG.max="+ (float)fiber.get(1)/1000) + "&";
+//        }
+//
+//        if(!sodium.isEmpty()) {
+//            query += String.format("nutrition.NA.min=%" + (float)sodium.get(0)/1000 +
+//                    "&nutrition.NA.max="+ (float)sodium.get(1)/1000) + "&";
+//        }
+//
+//        if(!calories.isEmpty()) {
+//            query += String.format("nutrition.ENERC_KCAL.min=%" + (float)calories.get(0)/1000 +
+//                    "&nutrition.ENERC_KCAL.max="+ (float)calories.get(1)/1000) + "&";
+//        }
+//
+//        if(!carbs.isEmpty()) {
+//            query += String.format("nutrition.CHOCDF.min=%" + (float)carbs.get(0)/1000 +
+//                    "&nutrition.CHOCDF.max="+ (float)carbs.get(1)/1000) + "&";
+//        }
+//
+//        if(!sugar.isEmpty()) {
+//            query += String.format("nutrition.SUGAR.min=%" + (float)sugar.get(0)/1000 +
+//                    "&nutrition.SUGAR.max="+ (float)sugar.get(1)/1000) + "&";
+//        }
+//
+//        query += "requirePictures=true";
+        return url + q;
     }
 }
