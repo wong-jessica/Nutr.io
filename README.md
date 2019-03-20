@@ -6,5 +6,5 @@ Summary:
   is brought up where the user can input their preferences.  InputPreferencesActivity leads to the IngredientsActivity
   where the user can input their existing ingredients.  If the user is signing in, then SearchActivity is brought up
   where recipes catered towards the user are displayed.  To do this, a url is built up using the user's 
-  preferences and then this url is sent to the API Yummly and the correct results are pulled.  We are actively putting in user 
+  preferences and then this url is sent to the Yummly API and the correct results are pulled.  We are actively putting in user 
   information to the Firebase database so that the correct information can be retrieved when we are making API calls.
