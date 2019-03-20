@@ -79,11 +79,15 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
                 filteredRecipe.addAll(recipeListFilled);
             }
             else {
-                String filterBy = query.toString().toLowerCase().trim();
+                String[] filterBy = query.toString().toLowerCase().trim().split(" ");
 
                 for (RecipeCard recipe : recipeListFilled) {
-                    if (recipe.getRecipeName().toLowerCase().contains(filterBy)) {
-                        filteredRecipe.add(recipe);
+                    for (String filter : filterBy) {
+                        if (recipe.getRecipeName().toLowerCase().contains(filter) ||
+                                recipe.getRecipeSource().toLowerCase().contains(filter) ||
+                                recipe.getRecipeIngredients().toLowerCase().contains(filter)) {
+                            filteredRecipe.add(recipe);
+                        }
                     }
                 }
             }
