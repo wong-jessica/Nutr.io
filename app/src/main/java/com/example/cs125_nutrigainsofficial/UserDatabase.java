@@ -53,7 +53,8 @@ public class UserDatabase {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-        userRef.setLikes(likes);
+        if(likes.size() != 0)
+            userRef.setLikes(likes);
     }
 
     private void setDislikes() {
@@ -70,7 +71,8 @@ public class UserDatabase {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-        userRef.setDislikes(dislikes);
+        if(dislikes.size() != 0)
+            userRef.setDislikes(dislikes);
     }
 
     private void setdietChoice() {
@@ -87,7 +89,8 @@ public class UserDatabase {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-        userRef.setDietChoice(dietChoice);
+        if(dietChoice.size() != 0)
+            userRef.setDietChoice(dietChoice);
     }
 
     private void setAllergies() {
@@ -104,7 +107,8 @@ public class UserDatabase {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-        userRef.setAllergies(allergies);
+        if(allergies.size() != 0)
+           userRef.setAllergies(allergies);
     }
 
     private void setReligious() {
@@ -121,7 +125,8 @@ public class UserDatabase {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-        userRef.setReligious(religious);
+        if(religious.size() != 0)
+            userRef.setReligious(religious);
     }
 
     private void setFat() {
@@ -138,7 +143,8 @@ public class UserDatabase {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-        userRef.setFat(fat);
+        if(fat.size() != 0)
+            userRef.setFat(fat);
     }
 
     private void setFiber() {
@@ -155,7 +161,8 @@ public class UserDatabase {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-        userRef.setFiber(fiber);
+        if(fiber.size() != 0)
+            userRef.setFiber(fiber);
     }
 
     private void setSodium() {
@@ -172,7 +179,8 @@ public class UserDatabase {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-        userRef.setSodium(sodium);
+        if(sodium.size() != 0)
+            userRef.setSodium(sodium);
     }
 
     private void setCalories() {
@@ -189,7 +197,8 @@ public class UserDatabase {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-        userRef.setCalories(calories);
+        if(calories.size() != 0)
+            userRef.setCalories(calories);
     }
 
     private void setCarbs() {
@@ -206,7 +215,8 @@ public class UserDatabase {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-        userRef.setCarbs(carbs);
+        if(carbs.size() != 0)
+            userRef.setCarbs(carbs);
     }
 
     private void setSugar() {
@@ -223,7 +233,8 @@ public class UserDatabase {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-        userRef.setSugar(sugar);
+        if(sugar.size() != 0)
+            userRef.setSugar(sugar);
     }
 
     public void setIngredients() {
@@ -240,7 +251,8 @@ public class UserDatabase {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-        userRef.setIngredients(ingredients);
+        if(ingredients.size() != 0)
+            userRef.setIngredients(ingredients);
     }
 
     public void setFavorites() {
@@ -257,6 +269,25 @@ public class UserDatabase {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-        userRef.setFavorites(favorites);
+        if(favorites.size() != 0)
+            userRef.setFavorites(favorites);
     }
+
+    public void createUser(){
+        setLikes();
+        setDislikes();
+        setdietChoice();
+        setAllergies();
+        setReligious();
+        setFat();
+        setFiber();
+        setSodium();
+        setCalories();
+        setCarbs();
+        setSugar();
+        setIngredients();
+        setFavorites();
+    }
+
+
 }

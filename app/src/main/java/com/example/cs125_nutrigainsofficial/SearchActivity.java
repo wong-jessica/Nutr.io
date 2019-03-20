@@ -30,14 +30,12 @@ public class SearchActivity extends AppCompatActivity{
 //    private FirebaseUser currentUserID = mAuth.getCurrentUser();
 //    private DatabaseReference user = userDB.child(currentUserID.getUid());
 
-    private UserDatabase userDatabase;
-    private User db = userDatabase.userRef;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
+        Log.i(TAG,"HELLO"+createQueryCall("Chicken"));
         fillRecipeList();
         connectRecyclerView();
     }
@@ -115,24 +113,29 @@ public class SearchActivity extends AppCompatActivity{
      * @return A URL.
      */
     private static String createQueryCall(String q) {
+        UserDatabase userDatabase = new UserDatabase();
+        userDatabase.createUser();
+//        User db = userDatabase.userRef;
+
+        Log.i(TAG, userDatabase.userRef.getIngredients().get(0));
         final String APP_ID = "e6ee5f7d";
         final String APP_KEY = "bcf55972e39b5e7f20d9b329569a0359";
         String url = String.format("http://api.yummly.com/v1/api/recipes?_app_id=%s&_app_key=%s?", APP_ID, APP_KEY);
         String query = "";
-//
-//        ArrayList<String> likes = user.getLikes();
-//        ArrayList<String> dislikes = user.getDislikes();
-//        ArrayList<String> dietChoice = user.getDietChoice();
-//        ArrayList<String> allergies = user.getAllergies();
-//        ArrayList<String> religious = user.getReligious();
-//        ArrayList<Integer> calories = user.getCalories();
-//        ArrayList<Integer> carbs = user.getCarbs();
-//        ArrayList<Integer> fat = user.getFat();
-//        ArrayList<Integer> fiber = user.getFiber();
-//        ArrayList<Integer> sodium = user.getSodium();
-//        ArrayList<Integer> sugar = user.getSugar();
-//        ArrayList<String> ingredients = user.getIngredients();
-//
+
+//        ArrayList<String> likes = userDatabase.userRef.getLikes();
+//        ArrayList<String> dislikes = db.getDislikes();
+//        ArrayList<String> dietChoice = db.getDietChoice();
+//        ArrayList<String> allergies = db.getAllergies();
+//        ArrayList<String> religious = db.getReligious();
+//        ArrayList<Integer> calories = db.getCalories();
+//        ArrayList<Integer> carbs = db.getCarbs();
+//        ArrayList<Integer> fat = db.getFat();
+//        ArrayList<Integer> fiber = db.getFiber();
+//        ArrayList<Integer> sodium = db.getSodium();
+//        ArrayList<Integer> sugar = db.getSugar();
+        ArrayList<String> ingredients = userDatabase.userRef.getIngredients();
+
 //        if(!q.isEmpty()) {
 //            query += "q=" + encode(q) + "&";
 //        }
@@ -204,8 +207,8 @@ public class SearchActivity extends AppCompatActivity{
 //            query += String.format("nutrition.SUGAR.min=%" + (float)sugar.get(0)/1000 +
 //                    "&nutrition.SUGAR.max="+ (float)sugar.get(1)/1000) + "&";
 //        }
-//
-//        query += "requirePictures=true";
-        return url + q;
+
+        query += "requirePictures=true";
+        return url + query;
     }
 }
