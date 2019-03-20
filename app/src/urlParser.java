@@ -4,50 +4,52 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.*;
 
-class jsonObject{
-	/*since Hashtable must have a type for key and value,
-	 *creates a Hashtable for each json type (numbers,booleans,nulls all get converted to string)
-	*/
-	Hashtable<String,String> jStr = new Hashtable<String,String>();
-	Hashtable<String,jsonArray> jArr = new Hashtable<String,jsonArray>();
-	Hashtable<String,jsonObject> jObj = new Hashtable<String,jsonObject>();
-	
-	void put(String key,String s) {
-		jStr.put(key, s);
-	}String oGetStr(String key) {//get a string from a jObject
-		return jStr.get(key);
-	}
-	void put(String key,jsonArray a) {
-		jArr.put(key, a);
-	}jsonArray oGetArr(String key) {//get a jArray from a jObject
-		return jArr.get(key);
-	}
-	void put(String key,jsonObject o) {
-		jObj.put(key, o);
-	}jsonObject oGetObj(String key) {//get a jObject from a jObject
-		return jObj.get(key);
-	}
-}
-class jsonArray{
-	/*since ArrayList must have a type for key and value,
-	 *creates a Hashtable for each json type (numbers,booleans,nulls all get converted to string)
-	*/
-	ArrayList<String> aStr = new ArrayList<String>();
-	ArrayList<jsonObject> aObj = new ArrayList<jsonObject>();
-	
-	void add(String s) {
-		aStr.add(s);
-	}String aGetStr(int index) {//get a string from a jArray
-		return aStr.get(index);
-	}
-	void add(jsonObject o) {
-		aObj.add(o);
-	}jsonObject aGetObj(int index) {//get a jObject from a jArray
-		return aObj.get(index);
-	}
-}
 public class urlParser {
-	
+
+	//private classes~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	static class jsonObject{
+		/*since Hashtable must have a type for key and value,
+		 *creates a Hashtable for each json type (numbers,booleans,nulls all get converted to string)
+		*/
+		Hashtable<String,String> jStr = new Hashtable<String,String>();
+		Hashtable<String,jsonArray> jArr = new Hashtable<String,jsonArray>();
+		Hashtable<String,jsonObject> jObj = new Hashtable<String,jsonObject>();
+		
+		void put(String key,String s) {
+			jStr.put(key, s);
+		}String oGetStr(String key) {//get a string from a jObject
+			return jStr.get(key);
+		}
+		void put(String key,jsonArray a) {
+			jArr.put(key, a);
+		}jsonArray oGetArr(String key) {//get a jArray from a jObject
+			return jArr.get(key);
+		}
+		void put(String key,jsonObject o) {
+			jObj.put(key, o);
+		}jsonObject oGetObj(String key) {//get a jObject from a jObject
+			return jObj.get(key);
+		}
+	}
+	static class jsonArray{
+		/*since ArrayList must have a type for key and value,
+		 *creates a Hashtable for each json type (numbers,booleans,nulls all get converted to string)
+		*/
+		ArrayList<String> aStr = new ArrayList<String>();
+		ArrayList<jsonObject> aObj = new ArrayList<jsonObject>();
+		
+		void add(String s) {
+			aStr.add(s);
+		}String aGetStr(int index) {//get a string from a jArray
+			return aStr.get(index);
+		}
+		void add(jsonObject o) {
+			aObj.add(o);
+		}jsonObject aGetObj(int index) {//get a jObject from a jArray
+			return aObj.get(index);
+		}
+	}
+	//private methods~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	//sends a url and returns the respnse as a string
 	private final String USER_AGENT = "Mozilla/5.0";
 	private String sendGet(String url) throws Exception { // HTTP GET request
@@ -57,8 +59,8 @@ public class urlParser {
 		//add request header
 		con.setRequestProperty("User-Agent", USER_AGENT);
 		int responseCode = con.getResponseCode();
-		System.out.println("Sending 'GET' request to URL : " + url);
-		System.out.println("Response Code : " + responseCode);
+//		System.out.println("Sending 'GET' request to URL : " + url);
+//		System.out.println("Response Code : " + responseCode);
 		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 		String inputLine;
 		StringBuffer response = new StringBuffer();
@@ -70,8 +72,8 @@ public class urlParser {
 	}
 	
 	//takes in a (String)Json file and parses it into Hashtables, arrayLists, and Strings
-	static int x;
-	static jsonObject jsonObjParse(String s,int index) {
+	private static int x;
+	private static jsonObject jsonObjParse(String s,int index) {
 		jsonObject jo = new jsonObject();
 		for(int i=index; i<s.length();) {
 			if(s.charAt(i-1)=='}'){//if empty jsonObject {}
@@ -130,11 +132,40 @@ public class urlParser {
 		}
 		return jo;//*note* code doesn't reach here
 	}
-	
-	public static void main(String[] args) throws Exception {
-		urlParser http = new urlParser();//<-NOTE: name of constructor is name of file(___.java / public class ___)
-		String ss = http.sendGet("http://api.yummly.com/v1/api/recipe/Meatball-Parmesan-Casserole-2626493?_app_id=e6ee5f7d&_app_key=bcf55972e39b5e7f20d9b329569a0359"); //System.out.println(ss.length());
-		jsonObject searchResults = jsonObjParse(ss,2);//0 is "{" and 1 is quote, so we skip 2
-		//System.out.println("\n~~ "+ searchResults.oGetObj("attributes").oGetArr("course").aGetStr(0) );
+	//public classes & methods~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	static class recipe{
+		String image; String name; String source; String cook_time;
+		String rating; String[] ingredients; String id;
+		recipe(jsonObject searchResults, int m){
+			jsonObject match = searchResults.oGetArr("matches").aGetObj(m);
+			image = match.oGetArr("smallImageUrls").aGetStr(0);
+			name = match.oGetStr("recipeName");
+			source = match.oGetStr("sourceDisplayName");
+			cook_time = match.oGetStr("totalTimeInSeconds");
+			rating = match.oGetStr("rating");
+			int length = match.oGetArr("ingredients").aStr.size();
+			ingredients = new String[length];
+			for(int i=0; i<length; i++) {
+				ingredients[i] = match.oGetArr("ingredients").aGetStr(i);
+			}
+			id = match.oGetStr("id");
+		}
 	}
+	static recipe[] getRecipes(String url) throws Exception{
+		urlParser http = new urlParser();//<-NOTE: name of constructor is name of file(___.java / public class ___)
+		String response = http.sendGet(url);
+		jsonObject searchResults = jsonObjParse(response,2);//0 is "{" and 1 is quote, so we skip 2
+		recipe[] recipes = new recipe[10];
+		for(int i=0; i<10; i++) {
+			recipes[i] = new recipe(searchResults,i);
+		}
+		return recipes;
+	}
+	
+//	public static void main(String[] args) throws Exception {
+//		sandbox http = new sandbox();//<-NOTE: name of constructor is name of file(___.java / public class ___)
+//		String ss = http.sendGet("http://api.yummly.com/v1/api/recipe/Meatball-Parmesan-Casserole-2626493?_app_id=e6ee5f7d&_app_key=bcf55972e39b5e7f20d9b329569a0359"); //System.out.println(ss.length());
+//		jsonObject searchResults = jsonObjParse(ss,2);//0 is "{" and 1 is quote, so we skip 2
+//		System.out.println("\n~~ "+ searchResults.oGetObj("attributes").oGetArr("course").aGetStr(0) );
+//	}
 }
