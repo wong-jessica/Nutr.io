@@ -76,6 +76,8 @@ public class User {
         this.ingredients.add(i);
     }
 
+    public void setIngredients(ArrayList<String> s){this.ingredients = s;}
+
     public ArrayList<Integer> getSugar() {
         return sugar;
     }
@@ -83,6 +85,8 @@ public class User {
     public void addSugar(int i) {
         this.sugar.add(i);
     }
+
+    public void setSugar(ArrayList<Integer> i){this.sugar = i;}
 
     public ArrayList<Integer> getCarbs() {
         return carbs;
@@ -92,6 +96,8 @@ public class User {
         this.carbs.add(i);
     }
 
+    public void setCarbs(ArrayList<Integer> c){this.carbs = c;}
+
     public ArrayList<Integer> getCalories() {
         return calories;
     }
@@ -99,6 +105,8 @@ public class User {
     public void addCalories(int i) {
         this.calories.add(i);
     }
+
+    public void setCalories(ArrayList<Integer> c){this.calories = c;}
 
     public ArrayList<Integer> getSodium() {
         return sodium;
@@ -108,6 +116,8 @@ public class User {
         this.sodium.add(i);
     }
 
+    public void setSodium(ArrayList<Integer> s){this.sodium = s;}
+
     public ArrayList<Integer> getFiber() {
         return fiber;
     }
@@ -116,6 +126,8 @@ public class User {
         this.fiber.add(i);
     }
 
+    public void setFiber(ArrayList<Integer> f){this.fiber = f;}
+
     public ArrayList<Integer> getFat() {
         return fat;
     }
@@ -123,6 +135,8 @@ public class User {
     public void addFat(int i) {
         this.fat.add(i);
     }
+
+    public void setFat(ArrayList<Integer> f){this.fat = f;}
 
     public ArrayList<String> getReligious() {
         return religious;

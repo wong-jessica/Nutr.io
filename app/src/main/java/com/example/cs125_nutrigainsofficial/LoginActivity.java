@@ -86,9 +86,9 @@ public class LoginActivity extends AppCompatActivity{
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("Success", "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            databaseUsers.child("users").setValue(user.getUid());
                             u = new User(user.getUid(),user.getEmail(),mName.getText().toString(),mAge.getText().toString(),mGender.getText().toString());
                             databaseUsers.child(user.getUid()).setValue(u);
+                            //databaseUsers.child(user.getUid()).setValue(u);
 //                            databaseUsers.child(userID).child("fat").child("").setValue(u.getFat());
 //                            databaseUsers.child(userID).child("fiber").child("").setValue(u.getFiber());
 //                            databaseUsers.child(userID).child("sodium").child("").setValue(u.getSodium());

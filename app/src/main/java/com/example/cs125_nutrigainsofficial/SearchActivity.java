@@ -1,28 +1,18 @@
 package com.example.cs125_nutrigainsofficial;
 
-import android.content.Intent;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
-import android.support.v7.widget.SearchView;
-import android.widget.TextView;
 
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -76,6 +66,7 @@ public class SearchActivity extends AppCompatActivity{
 
     private void connectRecyclerView() {
         RecyclerView recipeResults = findViewById(R.id.recipe_results);
+        //adapter = new ArrayAdapter<>(this, android.R.layout.
         recipeResults.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(SearchActivity.this);
         adapter = new RecipeAdapter(recipeList);
