@@ -37,7 +37,7 @@ public class UserDatabase {
     private FirebaseUser currentUserID = mAuth.getCurrentUser();
     private DatabaseReference user = userDB.child(currentUserID.getUid());
 
-    public User userRef;
+    public User userRef = new User();
 
     private void setLikes() {
         user.child("likes").addValueEventListener(new ValueEventListener() {
@@ -45,7 +45,10 @@ public class UserDatabase {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     String like = child.getValue(String.class);
+                    assert like != null;
                     likes.add(like);
+                    assert likes != null;
+                    Log.i("RESULTS", like);
                 }
             }
 
@@ -55,6 +58,7 @@ public class UserDatabase {
         });
         if(likes.size() != 0)
             userRef.setLikes(likes);
+//        Log.i("RESULTS copied",likes.get(0));
     }
 
     private void setDislikes() {

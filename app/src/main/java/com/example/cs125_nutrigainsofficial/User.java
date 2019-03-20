@@ -23,6 +23,9 @@ public class User {
     private ArrayList<String> ingredients = new ArrayList<>();
     private ArrayList<String> favorites = new ArrayList<>();
 
+    User() {
+    }
+
     User(String id, String email, String name, String age, String gender){
         this.userId = id;
         this.email = email;
