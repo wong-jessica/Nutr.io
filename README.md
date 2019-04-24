@@ -1,4 +1,4 @@
-# CS125NutriGainsOfficial
+# Nutr.io
 Project for CS125 Next Generation Search Systems
 Summary:
   Our app, called Nutr.io is meant to help users decide what to make based on what ingredients they have and their likes/dislikes,  allergies, etc.  We are building a personal user model so that recipes are uniquely catered to each user. 
